@@ -2,9 +2,9 @@ const config = {
     auth: {
       google: {
         clientId:
-          process.env.GOOGLE_CLIENT_ID || "651816047225-1us03r4vchvce7h51t0c49f4u0ip7ubm.apps.googleusercontent.com",
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET || "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",
-        redirectUri: process.env.GOOGLE_REDIRECT_URI || "http://localhost:3001/callback/google",
+          process.env.GOOGLE_CLIENT_ID || "177675535827-2bl1tgt56b4jaumq54jqqdm1dv3t3q1r.apps.googleusercontent.com",
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET || "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",
+        redirectUri: process.env.GOOGLE_REDIRECT_URI || "http://localhost:3000/callback/google",
         tokenEndpoint: "https://oauth2.googleapis.com/token",
         scope: "openid",
       },
