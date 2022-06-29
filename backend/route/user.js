@@ -5,6 +5,12 @@ const User = require("../model/user");
 const auth = require("../middleware/auth");
 const config = require("../app.config");
 
+// Get all users from DB
+router.get("/", async (req, res) => {
+  const users = await User.find();
+  res.status(200).json({ users });
+});
+
 router.post("/login", auth({ block: false }), async (req, res) => {
   const payload = req.body;
   if (!payload) return res.status(400).send("Nice try");
@@ -12,13 +18,14 @@ router.post("/login", auth({ block: false }), async (req, res) => {
   const code = payload.code;
   const provider = payload.provider;
   if (!code || !provider) return res.status(400).send("Nice try");
-  if (!Object.keys(config.auth).includes(provider)) return res.status(400).send("Nice try");
+  if (!Object.keys(config.auth).includes(provider))
+    return res.status(400).send("Nice try");
 
   const configProvider = config.auth[provider]; // google or github
   const link = configProvider.tokenEndpoint;
 
   // our own http module
-  console.log(configProvider.redirectUri)
+  console.log(configProvider.redirectUri);
   const response = await http.post(
     link,
     {
@@ -37,10 +44,9 @@ router.post("/login", auth({ block: false }), async (req, res) => {
 
   if (!response) return res.status(500).send("Token provider error");
   if (response.status !== 200) {
-    console.log(response.data)
+    console.log(response.data);
     return res.status(401).send("Nice try - oid provider error");
   }
-
 
   let oId;
   const onlyOauth = !response.data.id_token;
@@ -66,14 +72,17 @@ router.post("/login", auth({ block: false }), async (req, res) => {
 
   const key = `providers.${provider}`;
   let user = await User.findOne({ [key]: oId }); // already "registered" user in DB
-  console.log(user)
+  console.log(user);
   if (user && res.locals.user?.providers) {
     user.providers = { ...user.providers, ...res.locals.user.providers }; // append a new provider to its existing one
     user = await user.save();
   }
 
   const token = jwt.sign(
-    { userId: user?._id, providers: user ? user.providers : { [provider]: oId } },
+    {
+      userId: user?._id,
+      providers: user ? user.providers : { [provider]: oId },
+    },
     process.env.SECRET_KEY,
     { expiresIn: "1h" }
   ); // conditional chaining bro
@@ -92,7 +101,11 @@ router.post("/create", auth({ block: true }), async (req, res) => {
     providers: res.locals.user.providers,
   });
 
-  const token = jwt.sign({ userId: user._id, providers: user.providers }, process.env.SECRET_KEY, { expiresIn: "1h" });
+  const token = jwt.sign(
+    { userId: user._id, providers: user.providers },
+    process.env.SECRET_KEY,
+    { expiresIn: "1h" }
+  );
   res.status(200).json({ token });
 });
 
