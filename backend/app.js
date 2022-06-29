@@ -11,7 +11,7 @@ morgan.token("host", function (req, res) {
 
 app.use(cors());
 app.use(express.json()); // body-ban erkezo json-t parse-olni tudja
-app.use(morgan(":method :url :status - HOST: :host  - :response-time ms")); // use this middleware on every request
+app.use(morgan(":method :url :status - HOST: :host  - :response-time ms")); // use this middleware on every request, nice logs
 
 const dashboardRoutes = require("./route/dashboard");
 app.use("/api/dashboards", dashboardRoutes);
@@ -19,7 +19,7 @@ const userRoutes = require("./route/user.js");
 app.use("/api/user", userRoutes);
 
 app.get("/", (req, res) => {
-  console.log("Health check completed");
+  console.log("HOME woking");
   res.sendStatus(200);
 });
 
