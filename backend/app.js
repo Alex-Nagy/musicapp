@@ -19,7 +19,7 @@ const userRoutes = require("./route/user.js");
 app.use("/api/user", userRoutes);
 
 app.get("/", (req, res) => {
-  console.log("HOME woking");
+  console.log("HOME working");
   res.sendStatus(200);
 });
 
