@@ -7,7 +7,7 @@ const Profile = () => {
 
   return (
     <div>
-      <p>{token ? "Logged in" : "Anonymouss"}</p>
+      <p>{token ? "Logged in" : "Anonymous"}</p>
     </div>
   );
 };
