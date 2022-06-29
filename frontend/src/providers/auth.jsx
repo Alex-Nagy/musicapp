@@ -76,7 +76,7 @@ const AuthProvider = ({ children }) => {
   ); // provide value for my context
 };
 
-// custom hook bro
+// custom hook
 const useAuth = () => {
   const context = useContext(AuthContext); // read the context and subscribe to its changes
   if (!context) throw new Error("add AuthProvider to route"); // dev help only

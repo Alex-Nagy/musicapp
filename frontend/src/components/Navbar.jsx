@@ -29,29 +29,19 @@ const Navbar = () => {
           About
         </Button>
         <Button
-          onClick={() => nav("/profile")}
-          variant="contained"
-          size="small"
-        >
+          onClick={() => nav("/profile")} variant="contained" size="small">
           Profile
         </Button>
       </div>
       <div>
-        {!token ?(
+        {!token ? (
           <>
-        <Button onClick={() =>auth("google")}>
-          Login with GOOGLE
-        </Button>
-        <Button onClick={() => auth("oid")}>
-          Login with MY OID
-        </Button>
+            <Button onClick={() => auth("google")}>Login with GOOGLE</Button>
+            <Button onClick={() => auth("oid")}>Login with MY OID</Button>
           </>
-        )
-        :
-        <Button onClick={logout}>
-          Logout
-        </Button>
-        }
+        ) : (
+          <Button onClick={logout}>Logout</Button>
+        )}
       </div>
     </nav>
   );

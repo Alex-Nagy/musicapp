@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <div>
       <h3>Home</h3>
-      <p>{token ? "Logged in" : "Anonymus"}</p>
+      <p>{token ? "Logged in" : "Anonymous"}</p>
       <h4>Counter: {counter}</h4>
       <Button onClick={decrement} variant="contained" size="small">
         -
