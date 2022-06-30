@@ -28,10 +28,18 @@ const Navbar = () => {
         <Button onClick={() => nav("/about")} variant="contained" size="small">
           About
         </Button>
+        {token ? (
         <Button
           onClick={() => nav("/profile")} variant="contained" size="small">
           Profile
         </Button>
+        ) : (
+          <Button
+          onClick={() => nav("/profile")} variant="contained" size="small" disabled>
+          Profile
+        </Button>
+        )
+}
       </div>
       <div>
         {!token ? (
