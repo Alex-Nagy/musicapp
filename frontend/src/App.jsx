@@ -7,20 +7,8 @@ import Navbar from "./components/Navbar";
 import Callback from "./pages/Callback";
 import Protected from "./components/Protected";
 import Register from "./pages/Register";
-import axios from "axios";
 
 function App() {
-  const [username, setUsername] = useState("")
-  // log first username in db
-  useEffect(() => {
-    const getData = async () => {
-      const user = await axios.get("http://localhost:8080/api/user")
-      setUsername(user)
-      console.log(username.data.users[0].username)
-    }
-    getData()
-  }, [])
-  
   
   return (
     <div className="App">
