@@ -8,10 +8,17 @@ import Callback from "./pages/Callback";
 import Protected from "./components/Protected";
 import Register from "./pages/Register";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+
 function App() {
-  
+  // spotifyApi
+  const code = new URLSearchParams(window.location.search).get("code");
+
   return (
     <div className="App">
+      {code ? <Dashboard code={code} /> : <Login />}  {/* spotify login */}
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

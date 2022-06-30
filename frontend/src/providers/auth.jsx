@@ -1,5 +1,4 @@
 import { React, useState, useEffect, useContext, createContext } from "react";
-import http from "axios";
 import jwt from "jwt-decode";
 import { toDoApi } from "../api/toDoApi";
 import config from "../app.config.js";
@@ -22,8 +21,10 @@ const AuthProvider = ({ children }) => {
     );
     // searchParams.append("redirect_uri", "http://localhost:3000/callback"); // /callback/${provider} later
     searchParams.append("redirect_uri", window.location.origin + "/callback/" + provider);
+    if(provider !== 'spotify') {   // leave out for Spotify
     searchParams.append("scope", "openid");
     searchParams.append("prompt", "select_account");
+    }
 
     const completeUrl = googleBaseUrl + "?" + searchParams.toString();
     window.location.href = completeUrl;

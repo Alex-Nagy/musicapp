@@ -24,7 +24,8 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.16",
     "pino": "^8.0.0",
-    "pino-logflare": "^0.3.12"
+    "pino-logflare": "^0.3.12",
+    "spotify-web-api-node": "^5.0.2"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.21.1",

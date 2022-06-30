@@ -27,6 +27,16 @@ const config = {
         userEndpoint: "https://api.github.com/user", // need this if provider is OAuth compatible only
         user_id: "id",
       },
+
+      spotify: {
+        clientId: process.env.SPOTIFY_CLIENT_ID || "d4057ca6c39b408496e9a83ecabe4b4a",
+        clientSecret: process.env.SPOTIFY_CLIENT_SECRET || "0b57a0786e4f4cf0b7d09cdbbee3f6e6",
+        redirectUri: process.env.SPOTIFY_REDIRECT_URI || "http://localhost:3000/callback/spotify",
+        tokenEndpoint: "https://accounts.spotify.com/api/token",
+        scope: "user",
+        userEndpoint: "https://api.spotify.com/v1/me", // need this if provider is OAuth compatible only
+        user_id: "id",
+      },
     },
   };
   

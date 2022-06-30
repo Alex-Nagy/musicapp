@@ -28,6 +28,7 @@ const Home = () => {
       <Button onClick={goUp} variant="contained" size="small">
         +
       </Button>
+      <br />
       {token ? (
         <>
           <br />
@@ -35,8 +36,11 @@ const Home = () => {
         </>
       ) : (
         <>
-        <Button onClick={() => auth("google")} variant="contained" color="info" size="small">
+        <Button onClick={() => auth("google")} variant="contained" color="error" size="small">
           Google login
+        </Button>
+        <Button onClick={() => auth("spotify")} variant="contained" color="success" size="small">
+          Spotify login
         </Button>
         <Button onClick={() => auth("oid")} variant="contained" color="info" size="small">
           My login

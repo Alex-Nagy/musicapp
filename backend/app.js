@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
 const errorHandler = require("./middleware/errorHandler");
+const SpotifyWebApi = require("spotify-web-api-node");
 
 morgan.token("host", function (req, res) {
   return req.hostname;
@@ -23,10 +24,28 @@ app.get("/", (req, res) => {
   res.sendStatus(200);
 });
 
+// spotifyWebApi
+app.post("/login", (req, res) => {
+  const code = req.body.code;
+  const spotifyApi = new SpotifyWebApi({
+    redirectUri: "http://localhost:3000",
+    clientId: "d4057ca6c39b408496e9a83ecabe4b4a",
+    clientSecret: "0b57a0786e4f4cf0b7d09cdbbee3f6e6",
+  });
+  spotifyApi
+    .authorizationCodeGrant(code)
+    .then((data) => {
+      res.json({
+        accessToken: data.body.access_token,
+        refreshToken: data.body.refresh_token,
+        expiresIn: data.body.expires_in,
+      });
+    })
+    .catch(() => {
+      res.sendStatus(400);
+    });
+});
+
 app.use(errorHandler);
 
 module.exports = app;
-
-/*
-
-*/
