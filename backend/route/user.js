@@ -85,7 +85,7 @@ router.post("/login", auth({ block: false }), async (req, res) => {
     },
     process.env.SECRET_KEY,
     { expiresIn: "1h" }
-  ); // conditional chaining bro
+  ); // conditional chaining
   res.status(200).json({ token });
 
   /*
