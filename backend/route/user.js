@@ -4,6 +4,7 @@ const http = require("../util/http");
 const User = require("../model/user");
 const auth = require("../middleware/auth");
 const config = require("../app.config");
+const SpotifyWebApi = require("spotify-web-api-node");
 
 // Get all users from DB
 router.get("/", async (req, res) => {
@@ -12,6 +13,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/login", auth({ block: false }), async (req, res) => {
+
   const payload = req.body;
   if (!payload) return res.status(400).send("Nice try");
 
