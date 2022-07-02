@@ -23,12 +23,12 @@ const Navbar = () => {
     >
       <div>
         <Button
-          onClick={() => nav("/")}
+          onClick={() => nav("/lyrics")}
           variant="contained"
           size="small"
           color="info"
         >
-          Home
+          Lyrics
         </Button>
         <Button onClick={() => nav("/about")} variant="contained" size="small">
           About
