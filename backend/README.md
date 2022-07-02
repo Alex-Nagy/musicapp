@@ -11,6 +11,7 @@ Create a .env file in root, with the following variables:
 
 - PORT={4000} (backend)
 - APP_URL={http://localhost:3000/} (frontend)
+- CONNECTION_STRING=mongodb://localhost:27017/fullstack-app-template
 
 ## Dev start
 
