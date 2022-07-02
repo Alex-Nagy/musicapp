@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react"
-import useAuth from "./useAuth"
-import Player from "./Player"
-import TrackSearchResult from "./TrackSearchResult"
-import { Container, Form } from "react-bootstrap"
+import useAuth from "./hooks/useAuth"
+import Player from "./components/Player"
+import TrackSearchResult from "./components/TrackSearchResult"
+import { Container, Form} from "react-bootstrap"
 import SpotifyWebApi from "spotify-web-api-node"
 import axios from "axios"
+import Navbar from "./components/Navbar"
+import { Route, Routes } from "react-router-dom"
+import Profile from "./components/Profile"
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: "8b945ef10ea24755b83ac50cede405a0",
+  clientId: "d4057ca6c39b408496e9a83ecabe4b4a",
 })
 
 export default function Dashboard({ code }) {
@@ -75,6 +78,11 @@ export default function Dashboard({ code }) {
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
+      <Navbar/>
+      <Routes>
+        <Route path="/profile" exact component={Profile}/>
+      </Routes>
+
       <Form.Control
         type="search"
         placeholder="Search Songs/Artists"
