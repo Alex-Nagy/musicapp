@@ -48,6 +48,8 @@ GIT_REDIRECT_URI=http://localhost:3000/callback/github
 GIT_TOKEN_ENDPOINT=https://github.com/login/oauth/access_token
 GIT_SCOPE=user
 
+SPOTIFY_CLIENT_ID
+
 ## dev start:
 
 - npm i
