@@ -1,33 +1,26 @@
 {
-  "name": "backend",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
-    "test": "jest --verbose --coverage",
-    "test:watch": "jest --watch",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.27.2",
-    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "express-async-errors": "^3.1.1",
-    "jsonwebtoken": "^8.5.1",
-    "jwt-decode": "^3.1.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "lyrics-finder": "^21.7.0",
     "mongoose": "^6.3.4",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.16",
-    "pino": "^8.0.0",
-    "pino-logflare": "^0.3.12",
     "spotify-web-api-node": "^5.0.2"
   },
   "devDependencies": {
+    "nodemon": "^2.0.7",
     "axios-mock-adapter": "^1.21.1",
     "jest": "^28.1.0",
     "mongodb-memory-server": "^8.6.0",

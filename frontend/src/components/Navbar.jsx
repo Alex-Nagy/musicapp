@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { useAuth } from "../providers/auth";
+// import { useAuth } from "../providers/auth";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { auth, token, logout } = useAuth();
+  // const { auth, token, logout } = useAuth();
 
   const nav = (path) => {
     console.log("rerouting");
@@ -22,34 +22,26 @@ const Navbar = () => {
       }}
     >
       <div>
-        <Button onClick={() => nav("/")} variant="contained" size="small">
-          Home
+        <Button
+          onClick={() => nav("/lyrics")}
+          variant="contained"
+          size="small"
+        >
+          Lyrics
         </Button>
         <Button onClick={() => nav("/about")} variant="contained" size="small">
           About
         </Button>
-        {token ? (
+        <Button onClick={() => nav("/users")} variant="contained" size="small">
+          Users
+        </Button>
         <Button
-          onClick={() => nav("/profile")} variant="contained" size="small">
+          onClick={() => nav("/profile")}
+          variant="contained"
+          size="small"
+        >
           Profile
         </Button>
-        ) : (
-          <Button
-          onClick={() => nav("/profile")} variant="contained" size="small" disabled>
-          Profile
-        </Button>
-        )
-}
-      </div>
-      <div>
-        {!token ? (
-          <>
-            <Button onClick={() => auth("google")}>Login with GOOGLE</Button>
-            <Button onClick={() => auth("oid")}>Login with MY OID</Button>
-          </>
-        ) : (
-          <Button onClick={logout}>Logout</Button>
-        )}
       </div>
     </nav>
   );
