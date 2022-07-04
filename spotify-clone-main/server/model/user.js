@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, sparse: true },
   languages: { type: Array },
   genres: { type: Array },
+  collab: { type: Boolean },
 });
 
 const User = mongoose.model("user", userSchema);

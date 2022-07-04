@@ -3,6 +3,10 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SaveIcon from "@mui/icons-material/Save";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import axios from "axios";
 
 const Profile = () => {
@@ -11,16 +15,26 @@ const Profile = () => {
   const [email, setEmail] = useState("");
   const [languages, setLanguages] = useState([]);
   const [genres, setGenres] = useState([]);
+  const [collab, setCollab] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const postProfile = async () => {
-    const resp = await axios.post("http://localhost:8080/api/profile", {
-      artistName,
-      country,
-      email,
-      languages,
-      genres,
-    });
-    console.log(resp)
+    setLoading(true);
+    const resp = await axios
+      .post("http://localhost:8080/api/profile", {
+        artistName,
+        country,
+        email,
+        languages,
+        genres,
+        collab,
+      })
+      .then(() => setTimeout(() => {
+      setLoading(false);
+    }, 1500));
+
+    console.log(resp);
+
   };
 
   return (
@@ -61,15 +75,24 @@ const Profile = () => {
         label="Genres"
         onChange={(e) => setGenres(e.target.value)}
       />
+      <FormControlLabel
+        control={
+          <Checkbox color="success" onChange={() => setCollab(!collab)} />
+        }
+        label="Open to collaborate"
+      />
       <br />
-      <Button
+      <LoadingButton
         size="small"
-        variant="contained"
         color="success"
         onClick={postProfile}
+        loading={loading}
+        loadingPosition="start"
+        startIcon={<SaveIcon />}
+        variant="contained"
       >
         Save
-      </Button>
+      </LoadingButton>
       <Button size="small" variant="outlined" color="error">
         Cancel
       </Button>

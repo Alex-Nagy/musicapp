@@ -74,6 +74,7 @@ app.post("/api/profile", async (req, res) => {
       email: req.body.email,
       languages: req.body.languages,
       genres: req.body.genres,
+      collab: req.body.collab,
     });
     res.status(200).json({ user });
   } catch (error) {
