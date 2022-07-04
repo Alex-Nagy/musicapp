@@ -7,8 +7,9 @@ import SpotifyWebApi from "spotify-web-api-node";
 import axios from "axios";
 import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
-import Profile from "./components/Profile";
-import Lyrics from "./components/Lyrics";
+import Profile from "./pages/Profile";
+import Lyrics from "./pages/Lyrics";
+import Users from "./pages/Users";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "d4057ca6c39b408496e9a83ecabe4b4a",
@@ -100,6 +101,7 @@ export default function Dashboard({ code }) {
             element={<Lyrics searchResults={searchResults} lyrics={lyrics} />}
           />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/users" element={<Users />} />
         </Routes>
       </div>
 

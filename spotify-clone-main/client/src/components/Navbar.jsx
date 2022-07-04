@@ -26,12 +26,14 @@ const Navbar = () => {
           onClick={() => nav("/lyrics")}
           variant="contained"
           size="small"
-          color="info"
         >
           Lyrics
         </Button>
         <Button onClick={() => nav("/about")} variant="contained" size="small">
           About
+        </Button>
+        <Button onClick={() => nav("/users")} variant="contained" size="small">
+          Users
         </Button>
         <Button
           onClick={() => nav("/profile")}

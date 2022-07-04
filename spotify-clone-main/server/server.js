@@ -52,8 +52,8 @@ app.post("/login", (req, res) => {
         expiresIn: data.body.expires_in,
       });
     })
-    .catch((err) => {
-      res.sendStatus(400);
+    .catch((error) => {
+      res.status(400).json({ error: error.message });
     });
 });
 
@@ -65,7 +65,7 @@ app.get("/lyrics", async (req, res) => {
 });
 
 //*_____PROFILE_____*
-app.post("/profile", async (req, res) => {
+app.post("/api/profile", async (req, res) => {
   // if (!req.body?.artistName) return res.sendStatus(400);
   try {
     const user = await User.create({
@@ -75,11 +75,20 @@ app.post("/profile", async (req, res) => {
       languages: req.body.languages,
       genres: req.body.genres,
     });
-    res.status(200).json({ user })
-    
+    res.status(200).json({ user });
   } catch (error) {
-  console.log(error.message);
-  res.status(400).json({ error: error.message });
+    console.log(error.message);
+    res.status(400).json({ error: error.message });
+  }
+});
+
+//*_____USERS_____*
+app.get("/api/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({ users });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 });
 
