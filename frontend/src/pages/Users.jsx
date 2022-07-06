@@ -17,8 +17,8 @@ const Users = () => {
     <div>
       <h1>Users</h1>
       <div>
-        {users.map((user) => (
-          <div style={{ border: "1px solid black" }}>
+        {users.map((user, i) => (
+          <div key={i} style={{ border: "1px solid black" }}>
             <p>
               Artist name: <b>{user.artistName}</b>
             </p>
@@ -28,12 +28,12 @@ const Users = () => {
             <p>
               Email: <b>{user.email}</b>
             </p>
-            <p>
-              Languages: <b>{user.languages}</b>
-            </p>
-            <p>
-              Genres: <b>{user.genres}</b>
-            </p>
+            <ul>
+              Languages: <b>{user.languages.map((lang, i) => <li key={i}>{lang}</li>)}</b>
+            </ul>
+            <ul>
+              Genres: <b>{user.genres.map((genre, i) => <li key={i}>{genre}</li>)}</b>
+            </ul>
             <p>
               Open to Collaborate:{" "}
               <b>

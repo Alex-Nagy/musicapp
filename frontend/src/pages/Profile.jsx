@@ -7,6 +7,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import Alert from "@mui/material/Alert";
 import axios from "axios";
 
 const Profile = () => {
@@ -17,24 +18,38 @@ const Profile = () => {
   const [genres, setGenres] = useState([]);
   const [collab, setCollab] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [succes, setSucces] = useState(false);
+  
   const postProfile = async () => {
-    setLoading(true);
-    const resp = await axios
-      .post("http://localhost:8080/api/profile", {
-        artistName,
-        country,
-        email,
-        languages,
-        genres,
-        collab,
-      })
-      .then(() => setTimeout(() => {
+    try {
+      setLoading(true);
+      await axios
+        .post("http://localhost:8080/api/profile", {
+          artistName,
+          country,
+          email,
+          languages,
+          genres,
+          collab,
+        })
+        .then(() => {
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+        })
+        .then(() =>
+          setTimeout(() => {
+            setSucces(true);
+          }, 1000)
+        ).then(() =>
+        setTimeout(() => {
+          setSucces(false);
+        }, 3000)
+      );
+    } catch (error) {
+      alert(error.message);
       setLoading(false);
-    }, 1500));
-
-    console.log(resp);
-
+    }
   };
 
   return (
@@ -68,12 +83,12 @@ const Profile = () => {
       <TextField
         size="small"
         label="Languages"
-        onChange={(e) => setLanguages(e.target.value)}
+        onChange={(e) => setLanguages(e.target.value.split(", "))}
       />
       <TextField
         size="small"
         label="Genres"
-        onChange={(e) => setGenres(e.target.value)}
+        onChange={(e) => setGenres(e.target.value.split(", "))}
       />
       <FormControlLabel
         control={
@@ -93,9 +108,20 @@ const Profile = () => {
       >
         Save
       </LoadingButton>
-      <Button size="small" variant="outlined" color="error">
+      <Button
+        size="small"
+        variant="outlined"
+        color="error"
+        onClick={() => setLoading(false)}
+      >
         Cancel
       </Button>
+      <br />
+      {succes && (
+        <Alert variant="filled" severity="success">
+          Profile Saved!
+        </Alert>
+      )}
     </Box>
   );
 };
