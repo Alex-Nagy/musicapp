@@ -1,6 +1,6 @@
 # musicApp
 
-Vizsgaremek
+A fullstack web application using Spotify's Web API. You can search for an artist or song and listen to music with the lyrics displayed.
 
 ## System requirements
 - node.js
