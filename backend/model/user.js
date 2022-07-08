@@ -16,6 +16,5 @@ const userSchema = new mongoose.Schema({
   contacts: [Contacts],
   // regDate: { type: Date.now },
 });
-
 const User = mongoose.model("user", userSchema);
 module.exports = User;

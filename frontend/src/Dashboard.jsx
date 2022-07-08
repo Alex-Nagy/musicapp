@@ -23,6 +23,10 @@ export default function Dashboard({ code }) {
   const [searchResults, setSearchResults] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
   const [lyrics, setLyrics] = useState("");
+  const [spotID, setSpotID] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
 
   function chooseTrack(track) {
     setPlayingTrack(track);
@@ -48,6 +52,7 @@ export default function Dashboard({ code }) {
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
+    getMe();
   }, [accessToken]);
 
   useEffect(() => {
@@ -80,9 +85,23 @@ export default function Dashboard({ code }) {
     return () => (cancel = true);
   }, [search, accessToken]);
 
+  const getMe = async () => {
+    const meData = await axios.get("https://api.spotify.com/v1/me", {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      },
+    });
+    setSpotID(meData.data.id);
+    setName(meData.data.display_name);
+    setEmail(meData.data.email);
+    setCountry(meData.data.country);
+    console.log(meData.data);
+  };
+
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
-      <Navbar />
+      <Navbar email={email} />
       <Form.Control
         type="search"
         placeholder="Search Songs/Artists"
@@ -97,6 +116,13 @@ export default function Dashboard({ code }) {
             chooseTrack={chooseTrack}
           />
         ))}
+
+        {/*   <div className="d-flex justify-content-around text-muted m-0 p-0">
+        <p>{spotID && <p>{spotID}</p>}</p>
+        <p>{email && <p>{email}</p>}</p>
+        <p>{name && <p>{name}</p>}</p>
+        <p>{country && <p>{country}</p>}</p>
+        </div> */}
 
         <Routes>
           <Route
@@ -120,7 +146,17 @@ export default function Dashboard({ code }) {
           />
           <Route path="/favlyrics" element={<FavLyrics />} />
           <Route path="/contacts" element={<Contacts />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                spotID={spotID}
+                myemail={email}
+                name={name}
+                mycountry={country}
+              />
+            }
+          />
           <Route path="/users" element={<Users />} />
         </Routes>
       </div>

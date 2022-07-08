@@ -10,7 +10,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 
-const Profile = () => {
+const Profile = ({ spotID, myemail, name, mycountry }) => {
   const [artistName, setArtistName] = useState("");
   const [country, setCountry] = useState("");
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [succes, setSucces] = useState(false);
   // const [regDate, setRegDate] = useState(null)
-  
+
   const saveProfile = async () => {
     try {
       setLoading(true);
@@ -32,8 +32,9 @@ const Profile = () => {
           languages,
           genres,
           collab,
-        }) 
-        .then(() => {   //succes alert
+        })
+        .then(() => {
+          //succes alert
           setTimeout(() => {
             setLoading(false);
           }, 1000);
@@ -42,11 +43,12 @@ const Profile = () => {
           setTimeout(() => {
             setSucces(true);
           }, 1000)
-        ).then(() =>
-        setTimeout(() => {
-          setSucces(false);
-        }, 3000)
-      );
+        )
+        .then(() =>
+          setTimeout(() => {
+            setSucces(false);
+          }, 3000)
+        );
     } catch (error) {
       alert(error.message);
       setLoading(false);
@@ -65,20 +67,31 @@ const Profile = () => {
       <h1>My Profile</h1>
       <Avatar />
       <TextField
+        id="outlined-read-only-input"
+        label="User ID"
+        defaultValue={spotID}
+        InputProps={{
+          readOnly: true,
+        }}
+        size="small"
+        disabled
+      />
+      <TextField
         size="small"
         label="My Artist Name"
-        color="secondary"
+        defaultValue={name}
         onChange={(e) => setArtistName(e.target.value)}
-        value={artistName}
       />
       <TextField
         size="small"
         label="Country"
+        defaultValue={mycountry}
         onChange={(e) => setCountry(e.target.value)}
       />
       <TextField
         size="small"
         label="Email"
+        defaultValue={myemail}
         onChange={(e) => setEmail(e.target.value)}
       />
       <TextField
