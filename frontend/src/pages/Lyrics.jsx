@@ -8,6 +8,8 @@ import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
+import Alert from "@mui/material/Alert";
+import { useState } from "react";
 
 const StyledRating = styled(Rating)(({ theme }) => ({
   "& .MuiRating-iconEmpty .MuiSvgIcon-root": {
@@ -47,15 +49,32 @@ IconContainer.propTypes = {
   value: PropTypes.number.isRequired,
 };
 //--------------------------------------------------------
-const saveLyrics = async (lyrics) => {
-  await axios.post("http://localhost:8080/api/lyrics", {
-    lyrics,
-  });
-};
 
 const Lyrics = ({ searchResults, lyrics }) => {
+  const [succes, setSucces] = useState(false);
+
+  const saveLyrics = async (lyrics) => {
+    await axios
+      .post("http://localhost:8080/api/lyrics", {
+        lyrics,
+      })
+      .then(() => {
+        setSucces(true);
+      })
+      .then(() =>
+        setTimeout(() => {
+          setSucces(false);
+        }, 3000)
+      );
+  };
+
   return (
     <div>
+      {succes && (
+        <Alert variant="filled" severity="success">
+          Lyrics Saved!
+        </Alert>
+      )}
       <StyledRating
         className="position-absolute"
         name="highlight-selected-only"
