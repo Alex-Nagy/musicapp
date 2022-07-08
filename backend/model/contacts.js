@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 
 const contactsSchema = new mongoose.Schema({
-  name: { type: String },
-  address: {type: String}
+  artistName: { type: String },
+  country: { type: String },
+  email: { type: String, unique: true, sparse: true }
 });
 
 const Contacts = mongoose.model("contacts", contactsSchema);

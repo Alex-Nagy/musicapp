@@ -7,6 +7,7 @@ const SpotifyWebApi = require("spotify-web-api-node");
 const mongoose = require("mongoose");
 const User = require("./model/user");
 const FavLyrics = require("./model/favLyrics");
+const Contacts = require("./model/contacts")
 // const morgan = require("morgan");
 
 const app = express();
@@ -97,10 +98,23 @@ app.get("/api/users", async (req, res) => {
 });
 
 //*_____CONTACTS______
+app.post("/api/contacts", async (req, res) => {
+  try {
+    const contacts = await Contacts.create({
+      artistName: req.body.artistName,
+      country: req.body.country,
+      email: req.body.email,
+    });
+    res.status(200).json({ contacts });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 app.get("/api/contacts", async (req, res) => {
   try {
-    const users = await User.find();
-    res.status(200).json({ users });
+    const contacts = await Contacts.find();
+    res.status(200).json({ contacts });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

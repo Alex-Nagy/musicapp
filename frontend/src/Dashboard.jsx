@@ -97,19 +97,29 @@ export default function Dashboard({ code }) {
             chooseTrack={chooseTrack}
           />
         ))}
+
         <Routes>
           <Route
+            path="/"
+            element={
+              <div>
+                <h3 className="text-center">Search for a song</h3>
+                <h4 className="text-center">Or collaborate with others</h4>
+              </div>
+            }
+          />
+          <Route
             path="/lyrics"
-            element={<Lyrics searchResults={searchResults} lyrics={lyrics} playingTrack={playingTrack} />}
+            element={
+              <Lyrics
+                searchResults={searchResults}
+                lyrics={lyrics}
+                playingTrack={playingTrack}
+              />
+            }
           />
-          <Route
-            path="/favlyrics"
-            element={<FavLyrics />}
-          />
-          <Route
-            path="/contacts"
-            element={ <Contacts /> }
-          />
+          <Route path="/favlyrics" element={<FavLyrics />} />
+          <Route path="/contacts" element={<Contacts />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/users" element={<Users />} />
         </Routes>

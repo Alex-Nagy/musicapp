@@ -14,6 +14,12 @@ const Users = () => {
     getUsers();
   }, []);
 
+  const saveContact = async() => {
+    await axios.post("http://localhost:8080/api/contacts", {
+      
+    })
+  }
+
   return (
     <div>
       <h1 className="m-0">Users</h1>
@@ -47,7 +53,7 @@ const Users = () => {
             </b>
           </ul>
           <p>
-            Open to Collaborate:{" "}
+            Open now to Collaborate:{" "}
             <b>
               {user.collab ? (
                 <i style={{ color: "green" }}>YES</i>
