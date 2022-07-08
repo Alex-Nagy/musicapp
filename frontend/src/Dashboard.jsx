@@ -10,6 +10,8 @@ import { Route, Routes } from "react-router-dom";
 import Profile from "./pages/Profile";
 import Lyrics from "./pages/Lyrics";
 import Users from "./pages/Users";
+import Contacts from "./pages/Contacts";
+import FavLyrics from "./pages/FavLyrics";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "d4057ca6c39b408496e9a83ecabe4b4a",
@@ -98,7 +100,15 @@ export default function Dashboard({ code }) {
         <Routes>
           <Route
             path="/lyrics"
-            element={<Lyrics searchResults={searchResults} lyrics={lyrics} />}
+            element={<Lyrics searchResults={searchResults} lyrics={lyrics} playingTrack={playingTrack} />}
+          />
+          <Route
+            path="/favlyrics"
+            element={<FavLyrics />}
+          />
+          <Route
+            path="/contacts"
+            element={ <Contacts /> }
           />
           <Route path="/profile" element={<Profile />} />
           <Route path="/users" element={<Users />} />

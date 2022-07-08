@@ -20,10 +20,11 @@
     "spotify-web-api-node": "^5.0.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7",
     "axios-mock-adapter": "^1.21.1",
     "jest": "^28.1.0",
     "mongodb-memory-server": "^8.6.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7",
     "supertest": "^6.2.3"
   }
 }

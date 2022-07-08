@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const Users = () => {
+const Contacts = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -16,11 +16,10 @@ const Users = () => {
 
   return (
     <div>
-      <h1 className="m-0">Users</h1>
-      <button className="btn btn-link m-0 p-0 float-right">only collaborative</button>
-      <br />
+      <h1>My Contacts</h1>
+
       {users.map((user, i) => (
-        <div key={i} style={{ border: "5px solid black", borderRadius: "10px" }}>
+        <div key={i} style={{ border: "1px solid black" }}>
           <p>
             Artist name: <b>{user.artistName}</b>
           </p>
@@ -56,16 +55,12 @@ const Users = () => {
               )}
             </b>
           </p>
-          <Button size="small" variant="outlined">
-            Send email
-          </Button>
-          <Button size="small" variant="outlined">
-            Save
-          </Button>
+          <Button size="small" variant="outlined">Send email</Button> 
+          <Button size="small" variant="outlined">Save</Button> 
         </div>
       ))}
     </div>
   );
 };
 
-export default Users;
+export default Contacts;

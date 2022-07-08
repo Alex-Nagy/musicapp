@@ -19,8 +19,9 @@ const Profile = () => {
   const [collab, setCollab] = useState(false);
   const [loading, setLoading] = useState(false);
   const [succes, setSucces] = useState(false);
+  // const [regDate, setRegDate] = useState(null)
   
-  const postProfile = async () => {
+  const saveProfile = async () => {
     try {
       setLoading(true);
       await axios
@@ -31,8 +32,8 @@ const Profile = () => {
           languages,
           genres,
           collab,
-        })
-        .then(() => {
+        }) 
+        .then(() => {   //succes alert
           setTimeout(() => {
             setLoading(false);
           }, 1000);
@@ -100,7 +101,7 @@ const Profile = () => {
       <LoadingButton
         size="small"
         color="success"
-        onClick={postProfile}
+        onClick={saveProfile}
         loading={loading}
         loadingPosition="start"
         startIcon={<SaveIcon />}

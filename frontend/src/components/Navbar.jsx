@@ -27,20 +27,27 @@ const Navbar = () => {
           variant="contained"
           size="small"
         >
-          Lyrics
+          🎤Lyrics
         </Button>
-        <Button onClick={() => nav("/about")} variant="contained" size="small">
-          About
+        <Button className="mr-5" onClick={() => nav("/users")} variant="contained" size="small">
+          🎼Collaborate
         </Button>
-        <Button onClick={() => nav("/users")} variant="contained" size="small">
-          Users
+        <Button className="ml-5" onClick={() => nav("/contacts")} variant="contained" size="small">
+          📑Contacts
+        </Button>
+        <Button
+          onClick={() => nav("/favlyrics")}
+          variant="contained"
+          size="small"
+        >
+          ⭐Lyrics
         </Button>
         <Button
           onClick={() => nav("/profile")}
           variant="contained"
           size="small"
         >
-          Profile
+          👤Profile
         </Button>
       </div>
     </nav>
