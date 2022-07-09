@@ -28,7 +28,7 @@ const Users = () => {
       {users.map((user, i) => (
         <div key={i} style={{ border: "5px solid black", borderRadius: "10px" }}>
           <p>
-            Artist name: <b>{user.artistName}</b>
+            Artist name: <b>{user.artistName}</b> <span className="float-right">{user.userID}</span>
           </p>
           <p>
             Country: <b>{user.country}</b>

@@ -81,19 +81,19 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
       <TextField
         size="small"
         label="My Artist Name"
-        value={name}
+        defaultValue={name}
         onChange={(e) => setArtistName(e.target.value)}
       />
       <TextField
         size="small"
         label="Country"
-        value={mycountry}
+        defaultValue={mycountry}
         onChange={(e) => setCountry(e.target.value)}
       />
       <TextField
         size="small"
         label="Email"
-        value={myemail}
+        defaultValue={myemail}
         onChange={(e) => setEmail(e.target.value)}
       />
       <TextField

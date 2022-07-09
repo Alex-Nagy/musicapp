@@ -52,7 +52,7 @@ export default function Dashboard({ code }) {
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
-    getMe();
+    // getMe();
   }, [accessToken]);
 
   useEffect(() => {
@@ -85,6 +85,7 @@ export default function Dashboard({ code }) {
     return () => (cancel = true);
   }, [search, accessToken]);
 
+  useEffect(() => {
   const getMe = async () => {
     const meData = await axios.get("https://api.spotify.com/v1/me", {
       headers: {
@@ -97,7 +98,18 @@ export default function Dashboard({ code }) {
     setEmail(meData.data.email);
     setCountry(meData.data.country);
     console.log(meData.data);
+    console.log("getme");
+    // create in DB 🔻
+    await axios.post("http://localhost:8080/api/profile", {
+      userID: meData.data.id,
+      artistName: meData.data.display_name,
+      email: meData.data.email,
+      country: meData.data.country,
+    });
+    console.log("createme");
   };
+  getMe();
+}, [accessToken]);
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>

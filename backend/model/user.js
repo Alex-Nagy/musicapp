@@ -5,10 +5,10 @@ const Contacts = require("./contacts").schema;
 // const MyList = require("./myList")
 
 const userSchema = new mongoose.Schema({
-  userID: { type: String },
+  userID: { type: String, unique: true },
   artistName: { type: String },
   country: { type: String },
-  email: { type: String, unique: true, sparse: true },
+  email: { type: String, unique: true },
   languages: { type: Array },
   genres: { type: Array },
   collab: { type: Boolean, default: false },
