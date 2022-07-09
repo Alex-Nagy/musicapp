@@ -73,6 +73,7 @@ app.post("/api/profile", async (req, res) => {
   // if (!req.body?.artistName) return res.sendStatus(400);
   try {
     const user = await User.create({
+      userID : req.body.userID,
       artistName: req.body.artistName,
       country: req.body.country,
       email: req.body.email,
@@ -86,6 +87,7 @@ app.post("/api/profile", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+//todo: GET profile
 
 //*_____USERS_____*
 app.get("/api/users", async (req, res) => {

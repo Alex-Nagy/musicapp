@@ -11,9 +11,10 @@ import Alert from "@mui/material/Alert";
 import axios from "axios";
 
 const Profile = ({ spotID, myemail, name, mycountry }) => {
-  const [artistName, setArtistName] = useState("");
-  const [country, setCountry] = useState("");
-  const [email, setEmail] = useState("");
+  const userID = spotID
+  const [artistName, setArtistName] = useState(name);
+  const [country, setCountry] = useState(mycountry);
+  const [email, setEmail] = useState(myemail);
   const [languages, setLanguages] = useState([]);
   const [genres, setGenres] = useState([]);
   const [collab, setCollab] = useState(false);
@@ -26,6 +27,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
       setLoading(true);
       await axios
         .post("http://localhost:8080/api/profile", {
+          userID,
           artistName,
           country,
           email,
@@ -69,7 +71,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
       <TextField
         id="outlined-read-only-input"
         label="User ID"
-        defaultValue={spotID}
+        value={spotID}
         InputProps={{
           readOnly: true,
         }}
@@ -79,19 +81,19 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
       <TextField
         size="small"
         label="My Artist Name"
-        defaultValue={name}
+        value={name}
         onChange={(e) => setArtistName(e.target.value)}
       />
       <TextField
         size="small"
         label="Country"
-        defaultValue={mycountry}
+        value={mycountry}
         onChange={(e) => setCountry(e.target.value)}
       />
       <TextField
         size="small"
         label="Email"
-        defaultValue={myemail}
+        value={myemail}
         onChange={(e) => setEmail(e.target.value)}
       />
       <TextField
