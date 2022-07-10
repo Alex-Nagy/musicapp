@@ -7,7 +7,7 @@ const SpotifyWebApi = require("spotify-web-api-node");
 const mongoose = require("mongoose");
 const User = require("./model/user");
 const FavLyrics = require("./model/favLyrics");
-const Contacts = require("./model/contacts")
+const Contacts = require("./model/contacts");
 // const morgan = require("morgan");
 
 const app = express();
@@ -69,11 +69,11 @@ app.get("/lyrics", async (req, res) => {
 });
 
 //*_____PROFILE_____*
-app.post("/api/profile", async (req, res) => {
+app.post("/api/profile/create", async (req, res) => {
   // if (!req.body?.artistName) return res.sendStatus(400);
   try {
     const user = await User.create({
-      userID : req.body.userID,
+      userID: req.body.userID,
       artistName: req.body.artistName,
       country: req.body.country,
       email: req.body.email,
@@ -81,6 +81,27 @@ app.post("/api/profile", async (req, res) => {
       genres: req.body.genres,
       collab: req.body.collab,
     });
+    res.status(200).json({ user });
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.post("/api/profile/update", async (req, res) => {
+  // if (!req.body?.artistName) return res.sendStatus(400);
+  try {
+    const user = await User.findOneAndUpdate(
+      { userID: req.body.userID },
+      {
+        artistName: req.body.artistName,
+        country: req.body.country,
+        email: req.body.email,
+        languages: req.body.languages,
+        genres: req.body.genres,
+        collab: req.body.collab,
+      }
+    );
     res.status(200).json({ user });
   } catch (error) {
     console.log(error.message);
@@ -138,6 +159,17 @@ app.post("/api/lyrics", async (req, res) => {
 app.get("/api/lyrics", async (req, res) => {
   try {
     const favLyrics = await FavLyrics.find();
+    res.status(200).json({ favLyrics });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.post("/api/lyrics/delete", async (req, res) => {
+  try {
+    const favLyrics = await FavLyrics.findOneAndDelete({
+      lyrics: req.body.lyrics,
+    });
     res.status(200).json({ favLyrics });
   } catch (error) {
     res.status(400).json({ error: error.message });

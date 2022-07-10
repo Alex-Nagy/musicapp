@@ -26,7 +26,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
     try {
       setLoading(true);
       await axios
-        .post("http://localhost:8080/api/profile", {
+        .post("http://localhost:8080/api/profile/update", {
           userID,
           artistName,
           country,

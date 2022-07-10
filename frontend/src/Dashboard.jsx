@@ -100,7 +100,7 @@ export default function Dashboard({ code }) {
     console.log(meData.data);
     console.log("getme");
     // create in DB 🔻
-    await axios.post("http://localhost:8080/api/profile", {
+    await axios.post("http://localhost:8080/api/profile/create", {
       userID: meData.data.id,
       artistName: meData.data.display_name,
       email: meData.data.email,
