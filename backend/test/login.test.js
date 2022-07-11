@@ -1,5 +1,5 @@
 require("dotenv").config();
-const app = require("../app");
+const app = require("../server");
 const jwt = require("jsonwebtoken");
 const mockServer = require("supertest");
 const User = require("../model/user");

@@ -6,7 +6,7 @@ const mockServer = require("supertest");
 const User = require("../model/user");
 const { startDb, stopDb, deleteAll } = require("./util/inMemoryDb");
 
-describe("requests to api/dashboards", () => {
+describe("requests to api/contacts", () => {
   let connection;
   let server;
   let client;
@@ -32,13 +32,10 @@ describe("requests to api/dashboards", () => {
       username: "johnDoe",
     });
     await johnDoe.save();
-    const token = jwt.sign({ userId: johnDoe._id }, process.env.SECRET_KEY);
-
-    client.set("authorization", token);
     // can be multiple client.set();
 
     // when
-    const response = await client.get("/api/dashboards");
+    const response = await client.get("/api/contacts");
 
     // then
     expect(response.status).toBe(200);

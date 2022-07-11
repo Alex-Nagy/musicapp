@@ -1,10 +1,8 @@
-require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const lyricsFinder = require("lyrics-finder");
 const SpotifyWebApi = require("spotify-web-api-node");
-const mongoose = require("mongoose");
 const User = require("./model/user");
 const FavLyrics = require("./model/favLyrics");
 // const Contacts = require("./model/contacts");
@@ -498,15 +496,4 @@ app.post("/api/lyrics/delete", async (req, res) => {
   }
 });
 
-mongoose
-  .connect(process.env.CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("MongoDB connected");
-    app.listen(process.env.PORT, () => {
-      console.log(`Template is listening on port ${process.env.PORT}.`);
-    });
-  })
-  .catch((error) => console.log(error));
+module.exports = app
