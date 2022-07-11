@@ -20,7 +20,7 @@ const swaggerOptions = {
     info: {
       version: "1.0.0",
       title: "Music App API",
-      description: "API documentation of the Music App",
+      description: "API documentation for the Music App",
       contact: {
         name: "Alex-Nagy",
       },
@@ -63,32 +63,29 @@ app.post("/refresh", (req, res) => {
     });
 });
 
-/** swagger
+/**
  * @swagger
  * /login:
- *  post:
- *    summary: Log in user and add to Database
- *     requestBody:
-        content:
-          application/json:
-              properties:
-                id:
-                  type: integer
-                name:
-                  type: string
-              example:   # Sample object
-                id: 10
-                name: Jessica Smith
- *    description: Log in user with Spotify
- *    responses:
- *      '200':
- *        description: Successful response
- *      '400':
- *        description: Failed request
- *      '500':
- *        description: Failed request
- *      '401':
- *        description: Failed request
+ *     post:
+ *       summary: Log in user, and add to Database
+ *       description: Log in user with Spotify
+ *       operationId: "addUse"
+ *       consumes:
+ *       - "application/json"
+ *       parameters:
+ *       - in: "body"
+ *         name: "code"
+ *         description: "Auth code needed to login"
+ *         required: true
+ *       responses:
+ *        '200':
+ *          description: Successful response
+ *        '400':
+ *          description: Failed request
+ *        '500':
+ *          description: Failed request
+ *        '401':
+ *          description: Failed request
  */
 
 app.post("/login", (req, res) => {
@@ -113,6 +110,33 @@ app.post("/login", (req, res) => {
     });
 });
 
+/**
+ * @swagger
+ * /lyrics:
+ *     get:
+ *       summary: 
+ *       description: Get lyrics of a selected track
+ *       consumes:
+ *       - "application/json"
+ *       parameters:
+ *       - in: "query"
+ *         name: "artist"
+ *         description: "selected artist"
+ *         required: false
+ *       - in: "query"
+ *         name: "track"
+ *         description: "selected track"
+ *         required: false
+ *       responses:
+ *        '200':
+ *          description: Successful response
+ *        '400':
+ *          description: Failed request
+ *        '500':
+ *          description: Failed request
+ *        '401':
+ *          description: Failed request
+ */
 app.get("/lyrics", async (req, res) => {
   const lyrics =
     (await lyricsFinder(req.query.artist, req.query.track)) ||
@@ -120,6 +144,56 @@ app.get("/lyrics", async (req, res) => {
   res.json({ lyrics });
 });
 
+/**
+ * @swagger
+ * /api/profile/create:
+ *     post:
+ *       summary:
+ *       description: Create user in Database
+ *       operationId: "addUser"
+ *       consumes:
+ *       - "application/json"
+ *       parameters:
+ *       - in: "body"
+ *         name: "userID"
+ *         type: Number
+ *         description: "Need a unique ID"
+ *         required: true
+ *       - in: "body"
+ *         name: "artistName"
+ *         description: "Your artist name to be displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "country"
+ *         description: "Your country to be displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "email"
+ *         description: "Your email to be displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "email"
+ *         description: "Your spoken languages to be displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "email"
+ *         description: "Your favorit music genres to be displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "collab"
+ *         description: "Open to collab status to be displayed in database"
+ *         required: false
+ *         type: Boolean
+ *       responses:
+ *        '200':
+ *          description: Successful response
+ *        '400':
+ *          description: Failed request
+ *        '500':
+ *          description: Failed request
+ *        '401':
+ *          description: Failed request
+ */
 //*_____PROFILE_____*
 app.post("/api/profile/create", async (req, res) => {
   // if (!req.body?.artistName) return res.sendStatus(400);
@@ -139,7 +213,56 @@ app.post("/api/profile/create", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-
+/**
+ * @swagger
+ * /api/profile/update:
+ *     post:
+ *       summary: update user profile data in DB
+ *       description: update user profile in Database
+ *       operationId: "updateUser"
+ *       consumes:
+ *       - "application/json"
+ *       parameters:
+ *       - in: "body"
+ *         name: "userID"
+ *         type: Number
+ *         description: "Need ID to select which user to update"
+ *         required: true
+ *       - in: "body"
+ *         name: "artistName"
+ *         description: "Your artist name to be displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "country"
+ *         description: "Your country to be displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "email"
+ *         description: "Your email to be displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "email"
+ *         description: "Your spoken languages to be displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "email"
+ *         description: "Your favorit music genres to be displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "collab"
+ *         description: "Open to collab status to be displayed in database"
+ *         required: false
+ *         type: Boolean
+ *       responses:
+ *        '200':
+ *          description: Successful response
+ *        '400':
+ *          description: Failed request
+ *        '500':
+ *          description: Failed request
+ *        '401':
+ *          description: Failed request
+ */
 app.post("/api/profile/update", async (req, res) => {
   // if (!req.body?.artistName) return res.sendStatus(400);
   try {
@@ -161,7 +284,25 @@ app.post("/api/profile/update", async (req, res) => {
   }
 });
 //todo: GET profile
-
+/**
+ * @swagger
+ * /api/users:
+ *     get:
+ *       summary: all users profile data in DB
+ *       description: all users profile in Database
+ *       operationId: "allUser"
+ *       consumes:
+ *       - "application/json"
+ *       responses:
+ *        '200':
+ *          description: Successful response
+ *        '400':
+ *          description: Failed request
+ *        '500':
+ *          description: Failed request
+ *        '401':
+ *          description: Failed request
+ */
 //*_____USERS_____*
 app.get("/api/users", async (req, res) => {
   try {
@@ -171,7 +312,61 @@ app.get("/api/users", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-
+/**
+ * @swagger
+ * /api/contacts:
+ *     post:
+ *       summary: save a user to your contacts
+ *       description: save a user to your contacts list in DB
+ *       operationId: "addContact"
+ *       consumes:
+ *       - "application/json"
+ *       parameters:
+ *       - in: "body"
+ *         name: "myID"
+ *         type: Number
+ *         description: "Need myID to find my profile and add contact there"
+ *         required: true
+ *       - in: "body"
+ *         name: "userID"
+ *         type: Number
+ *         description: "Need ID to select which user to add"
+ *         required: true
+ *       - in: "body"
+ *         name: "artistName"
+ *         description: "Artist name displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "country"
+ *         description: "Country displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "email"
+ *         description: "Email displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "languages"
+ *         description: "Spoken languages displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "genres"
+ *         description: "Favorite music genres displayed in database"
+ *         required: false
+ *       - in: "body"
+ *         name: "collab"
+ *         description: "Open to collab status to be displayed in database"
+ *         required: false
+ *         type: Boolean
+ *       responses:
+ *        '200':
+ *          description: Successful response
+ *        '400':
+ *          description: Failed request
+ *        '500':
+ *          description: Failed request
+ *        '401':
+ *          description: Failed request
+ */
 //*_____CONTACTS______
 app.post("/api/contacts", async (req, res) => {
   try {
@@ -197,7 +392,23 @@ app.post("/api/contacts", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-
+/**
+ * @swagger
+ * /api/contacts:
+ *     get:
+ *       summary: get all of your saved contacts
+ *       description: save a user to your contacts list in DB
+ *       operationId: "getContact"
+ *       responses:
+ *        '200':
+ *          description: Successful response
+ *        '400':
+ *          description: Failed request
+ *        '500':
+ *          description: Failed request
+ *        '401':
+ *          description: Failed request
+ */
 app.get("/api/contacts", async (req, res) => {
   try {
     const me = await User.findOne({ userID: req.query.userID });
@@ -206,7 +417,36 @@ app.get("/api/contacts", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-
+/**
+ * @swagger
+ * /api/contacts/delete:
+ *     post:
+ *       summary: delete a user from your contacts
+ *       description: delete a user your contacts list in DB
+ *       operationId: "addContact"
+ *       consumes:
+ *       - "application/json"
+ *       parameters:
+ *       - in: "body"
+ *         name: "myID"
+ *         type: Number
+ *         description: "Need myID to find my profile and delete contact there"
+ *         required: true
+ *       - in: "body"
+ *         name: "userID"
+ *         type: Number
+ *         description: "Need ID to select which user to delete"
+ *         required: true
+ *       responses:
+ *        '200':
+ *          description: Successful response
+ *        '400':
+ *          description: Failed request
+ *        '500':
+ *          description: Failed request
+ *        '401':
+ *          description: Failed request
+ */
 app.post("/api/contacts/delete", async (req, res) => {
   try {
     const contacts = await User.findOneAndUpdate(
