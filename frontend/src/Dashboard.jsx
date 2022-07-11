@@ -129,13 +129,6 @@ export default function Dashboard({ code }) {
           />
         ))}
 
-        {/*   <div className="d-flex justify-content-around text-muted m-0 p-0">
-        <p>{spotID && <p>{spotID}</p>}</p>
-        <p>{email && <p>{email}</p>}</p>
-        <p>{name && <p>{name}</p>}</p>
-        <p>{country && <p>{country}</p>}</p>
-        </div> */}
-
         <Routes>
           <Route
             path="/"
@@ -157,7 +150,7 @@ export default function Dashboard({ code }) {
             }
           />
           <Route path="/favlyrics" element={<FavLyrics />} />
-          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/contacts" element={<Contacts spotID={spotID} />} />
           <Route
             path="/profile"
             element={
@@ -169,7 +162,7 @@ export default function Dashboard({ code }) {
               />
             }
           />
-          <Route path="/users" element={<Users />} />
+          <Route path="/users" element={<Users spotID={spotID} />} />
         </Routes>
       </div>
 

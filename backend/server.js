@@ -123,11 +123,19 @@ app.get("/api/users", async (req, res) => {
 //*_____CONTACTS______
 app.post("/api/contacts", async (req, res) => {
   try {
-    const contacts = await Contacts.create({
-      artistName: req.body.artistName,
-      country: req.body.country,
-      email: req.body.email,
-    });
+    const contacts = await User.findOneAndUpdate(
+      { userID: req.body.myID },
+      {
+        $push: {
+          contacts: {
+            userID: req.body.userID,
+            artistName: req.body.artistName,
+            country: req.body.country,
+            email: req.body.email,
+          },
+        },
+      }
+    );
     res.status(200).json({ contacts });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -136,7 +144,25 @@ app.post("/api/contacts", async (req, res) => {
 
 app.get("/api/contacts", async (req, res) => {
   try {
-    const contacts = await Contacts.find();
+    const me = await User.findOne({ userID: req.query.userID });
+    res.status(200).json(me.contacts);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.post("/api/contacts/delete", async (req, res) => {
+  try {
+    const contacts = await User.findOneAndUpdate(
+      { userID: req.body.myID },
+      {
+        $pull: {
+          contacts: {
+            userID: req.body.userID,
+          },
+        },
+      }
+    );
     res.status(200).json({ contacts });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -177,7 +203,10 @@ app.post("/api/lyrics/delete", async (req, res) => {
 });
 
 mongoose
-  .connect(process.env.CONNECTION_STRING)
+  .connect(process.env.CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("MongoDB connected");
     app.listen(process.env.PORT, () => {

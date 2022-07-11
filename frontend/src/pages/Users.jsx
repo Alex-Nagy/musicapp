@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const Users = () => {
+const Users = ({ spotID }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -14,21 +14,44 @@ const Users = () => {
     getUsers();
   }, []);
 
-  const saveContact = async() => {
+  const saveContact = async (
+    userID,
+    artistName,
+    country,
+    email,
+    languages,
+    genres,
+    collab,
+    instruments
+  ) => {
     await axios.post("http://localhost:8080/api/contacts", {
-      
-    })
-  }
+      myID: spotID,
+      userID,
+      artistName,
+      country,
+      email,
+      languages,
+      genres,
+      collab,
+      instruments,
+    });
+  };
 
   return (
     <div>
       <h1 className="m-0">Users</h1>
-      <button className="btn btn-link m-0 p-0 float-right">only collaborative</button>
+      <button className="btn btn-link m-0 p-0 float-right">
+        only collaborative
+      </button>
       <br />
       {users.map((user, i) => (
-        <div key={i} style={{ border: "5px solid black", borderRadius: "10px" }}>
+        <div
+          key={i}
+          style={{ border: "5px solid black", borderRadius: "10px" }}
+        >
           <p>
-            Artist name: <b>{user.artistName}</b> <span className="float-right">{user.userID}</span>
+            Artist name: <b>{user.artistName}</b>{" "}
+            <span className="float-right">{user.userID}</span>
           </p>
           <p>
             Country: <b>{user.country}</b>
@@ -65,7 +88,22 @@ const Users = () => {
           <Button size="small" variant="outlined">
             Send email
           </Button>
-          <Button size="small" variant="outlined">
+          <Button
+            size="small"
+            variant="outlined"
+            onClick={() =>
+              saveContact(
+                user.userID,
+                user.artistName,
+                user.country,
+                user.email,
+                user.languages,
+                user.genres,
+                user.collab,
+                user.instruments
+              )
+            }
+          >
             Save
           </Button>
         </div>
