@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const mockServer = require("supertest");
 const User = require("../model/user");
 const { startDb, stopDb, deleteAll } = require("./util/inMemoryDb");
-const { setupGoogleSuccessResponse, setupGoogleErrorResponse } = require("./util/httpMock");
+// const { setupGoogleSuccessResponse, setupGoogleErrorResponse } = require("./util/httpMock");
 
 describe("Test Login", () => {
   let connection;
@@ -73,59 +73,20 @@ describe("Test Login", () => {
     expect(response.status).toBe(400);
   });
 
-  test("should return 200 with valid provider id (user not created)", async () => {
+  test("should return 200 with valid data", async () => {
     // given
-    const code = "4/0AX4XfWigRi0tflCcAhGM5WngKa5_199L1dJjayorTpuSj0z4AlQbnIyZSs78wBXHO3HG_g";
-    const provider = "google";
-    setupGoogleSuccessResponse("7458tygbhf78");
+    const code = "AQC-jhdC_Z4VYjhhsaTMdxJ6BZzXjyAWiXOfh-C_RD7epYXgjtZ-CSLWqCD5zaA3IwWjpYBGmN4ZVXoh_uOCtZlaReZQQ6RthuN7u_qezhAzfUJCAHbiuAuUJF";
 
     // when
-    const response = await client.post("/api/user/login").send({
+    const response = await client.post("/login").send({
       code,
-      provider,
+      redirectUri: process.env.REDIRECT_URI,
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
     });
 
     // then
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(400);
   });
 
-  test("should return 200 with jwt valid provider id (user not created)", async () => {
-    // given
-    const code = "4/0AX4XfWigRi0tflCcAhGM5WngKa5_199L1dJjayorTpuSj0z4AlQbnIyZSs78wBXHO3HG_g";
-    const provider = "google";
-    const googleUserId = "vshdg674t7ryfgb";
-    setupGoogleSuccessResponse(googleUserId);
-
-    // when
-    const response = await client.post("/api/user/login").send({
-      code,
-      provider,
-    });
-
-    // then
-    expect(response.status).toBe(200);
-    const responseToken = jwt.decode(response.body);
-    expect(responseToken.providers.google).toBe(googleUserId);
-    const users = await User.find();
-    expect(users).toStrictEqual([]);
-  });
-
-  test("should return 401 with invalid code (user not created)", async () => {
-    // given
-    const code = "4/0AX4XfWigRi0tflCcAhGM5WngKa5_199L1dJjayorTpuSj0z4AlQbnIyZSs78wBXHO3HG_g";
-    const provider = "google";
-    setupGoogleErrorResponse();
-
-    // when
-    const response = await client.post("/api/user/login").send({
-      code,
-      provider,
-    });
-
-    // then
-    expect(response.status).toBe(401);
-    expect(response.body).toStrictEqual({});
-    const users = await User.find();
-    expect(users).toStrictEqual([]);
-  });
 });
