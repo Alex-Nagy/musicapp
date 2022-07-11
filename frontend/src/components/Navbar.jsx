@@ -58,6 +58,14 @@ const Navbar = ({ email }) => {
         <span>
           {email}
         </span>
+        <Button
+          onClick={() => nav("/")}
+          variant="contained"
+          size="small"
+          color="error"
+        >
+          Log out
+        </Button>
       </div>
     </nav>
   );

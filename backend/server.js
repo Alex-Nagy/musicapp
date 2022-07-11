@@ -132,6 +132,10 @@ app.post("/api/contacts", async (req, res) => {
             artistName: req.body.artistName,
             country: req.body.country,
             email: req.body.email,
+            languages: req.body.languages,
+            genres: req.body.genres,
+            collab: req.body.collab,
+            instruments: req.body.instruments
           },
         },
       }
