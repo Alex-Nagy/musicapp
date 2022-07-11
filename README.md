@@ -15,10 +15,12 @@ Create a ***.env*** file in **backend** folder, with the following variables:
     CLIENT_ID={d4057ca6c39b408496e9a83ecabe4b4a}
     CLIENT_SECRET={0b57a0786e4f4cf0b7d09cdbbee3f6e6}
 
-##### Dev start
+##### Start backend
+###### Dev start
     cd backend
     npm install
     npm run dev
+##### Start frontend
 ###### *In new terminal*
     cd frontend
     npm install
