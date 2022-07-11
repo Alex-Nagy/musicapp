@@ -164,7 +164,6 @@ export default function Dashboard({ code }) {
             }
           />
           <Route path="/users" element={<Users spotID={spotID} />} />
-          <Route path="/" element={<Login />} />
         </Routes>
       </div>
 

@@ -12,6 +12,11 @@ const Navbar = ({ email }) => {
     navigate(path);
   };
 
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = '/';
+}
+
   return (
     <nav
       className="navbar"
@@ -59,7 +64,7 @@ const Navbar = ({ email }) => {
           {email}
         </span>
         <Button
-          onClick={() => nav("/")}
+          onClick={() => logout()}
           variant="contained"
           size="small"
           color="error"
