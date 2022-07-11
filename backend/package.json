@@ -17,7 +17,9 @@
     "express": "^4.17.1",
     "lyrics-finder": "^21.7.0",
     "mongoose": "^6.3.4",
-    "spotify-web-api-node": "^5.0.2"
+    "spotify-web-api-node": "^5.0.2",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.4.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.21.1",

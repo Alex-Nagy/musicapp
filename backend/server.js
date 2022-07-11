@@ -10,11 +10,35 @@ const FavLyrics = require("./model/favLyrics");
 // const Contacts = require("./model/contacts");
 // const morgan = require("morgan");
 
+//?🔽------------------Swagger--------------------
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
+
+// Extended: https://swagger.io/specification/#infoObject
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      version: "1.0.0",
+      title: "Music App API",
+      description: "API documentation of the Music App",
+      contact: {
+        name: "Alex-Nagy",
+      },
+      servers: ["http://localhost:8080"],
+    },
+  },
+  apis: ["server.js"],
+};
+//?🔼-------------------Swagger--------------------
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(morgan(":method :url :status - HOST: :host  - :response-time ms")); // use this middleware on every request
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.post("/refresh", (req, res) => {
   const refreshToken = req.body.refreshToken;
@@ -38,6 +62,34 @@ app.post("/refresh", (req, res) => {
       res.sendStatus(400);
     });
 });
+
+/** swagger
+ * @swagger
+ * /login:
+ *  post:
+ *    summary: Log in user and add to Database
+ *     requestBody:
+        content:
+          application/json:
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+              example:   # Sample object
+                id: 10
+                name: Jessica Smith
+ *    description: Log in user with Spotify
+ *    responses:
+ *      '200':
+ *        description: Successful response
+ *      '400':
+ *        description: Failed request
+ *      '500':
+ *        description: Failed request
+ *      '401':
+ *        description: Failed request
+ */
 
 app.post("/login", (req, res) => {
   const code = req.body.code;
@@ -135,7 +187,7 @@ app.post("/api/contacts", async (req, res) => {
             languages: req.body.languages,
             genres: req.body.genres,
             collab: req.body.collab,
-            instruments: req.body.instruments
+            instruments: req.body.instruments,
           },
         },
       }
