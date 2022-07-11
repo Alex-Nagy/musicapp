@@ -11,7 +11,7 @@ import Alert from "@mui/material/Alert";
 import axios from "axios";
 
 const Profile = ({ spotID, myemail, name, mycountry }) => {
-  const userID = spotID
+  const userID = spotID;
   const [artistName, setArtistName] = useState(name);
   const [country, setCountry] = useState(mycountry);
   const [email, setEmail] = useState(myemail);
@@ -83,28 +83,33 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
         label="My Artist Name"
         defaultValue={name}
         onChange={(e) => setArtistName(e.target.value)}
+        className="bg-light"
       />
       <TextField
         size="small"
         label="Country"
         defaultValue={mycountry}
         onChange={(e) => setCountry(e.target.value)}
+        className="bg-light"
       />
       <TextField
         size="small"
         label="Email"
         defaultValue={myemail}
         onChange={(e) => setEmail(e.target.value)}
+        className="bg-light"
       />
       <TextField
         size="small"
         label="Languages"
         onChange={(e) => setLanguages(e.target.value.split(", "))}
+        className="bg-light"
       />
       <TextField
         size="small"
         label="Genres"
         onChange={(e) => setGenres(e.target.value.split(", "))}
+        className="bg-light"
       />
       <FormControlLabel
         control={

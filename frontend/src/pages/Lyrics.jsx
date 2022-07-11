@@ -92,7 +92,7 @@ const Lyrics = ({ searchResults, lyrics }) => {
       </button>
       <div className="lyrics">
         {searchResults.length === 0 && (
-          <div className="text-center" style={{ whiteSpace: "pre" }}>
+          <div className="text-center" style={{ whiteSpace: "pre", backgroundColor: "#fff9" }}>
             {lyrics}
           </div>
         )}

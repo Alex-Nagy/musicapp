@@ -47,7 +47,7 @@ const Users = ({ spotID }) => {
       {users.map((user, i) => (
         <div
           key={i}
-          style={{ border: "5px solid black", borderRadius: "10px" }}
+          style={{ border: "5px solid black", borderRadius: "10px", backgroundColor: "#fffd" }}
         >
           <p>
             Artist name: <b>{user.artistName}</b>{" "}

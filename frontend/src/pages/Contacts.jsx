@@ -35,7 +35,7 @@ const Contacts = ({ spotID }) => {
       {users.map((user, i) => (
         <div
           key={i}
-          style={{ border: "5px solid black", borderRadius: "10px" }}
+          style={{ border: "5px solid black", borderRadius: "10px", backgroundColor: "#fffd" }}
         >
           <p className="float-right">{user.userID}</p>
            <p>
@@ -64,7 +64,7 @@ const Contacts = ({ spotID }) => {
             </b>
           </ul>
           <p>
-            Open to Collaborate:{" "}
+            Open now to Collaborate:{" "}
             <b>
               {user.collab ? (
                 <i style={{ color: "green" }}>YES</i>

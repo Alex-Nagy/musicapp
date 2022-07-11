@@ -35,6 +35,7 @@ const FavLyrics = () => {
             border: "5px solid black",
             borderRadius: "10px",
             whiteSpace: "pre",
+            backgroundColor: "#fffd"
           }}
         >
           <Button

@@ -41,7 +41,7 @@ describe("Test Login", () => {
     const code = "random";
 
     // when
-    const response = await client.post("/api/user/login").send({ code });
+    const response = await client.post("/login").send({ code });
 
     // then
     expect(response.status).toBe(400);
@@ -49,10 +49,10 @@ describe("Test Login", () => {
 
   test("should return 400 without code", async () => {
     // given
-    const provider = "github";
+    const provider = "spotify";
 
     // when
-    const response = await client.post("/api/user/login").send({ provider });
+    const response = await client.post("/login").send({ provider });
 
     // then
     expect(response.status).toBe(400);
@@ -64,7 +64,7 @@ describe("Test Login", () => {
     const provider = "gitlab";
 
     // when
-    const response = await client.post("/api/user/login").send({
+    const response = await client.post("/login").send({
       code,
       provider,
     });
