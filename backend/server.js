@@ -7,7 +7,7 @@ const SpotifyWebApi = require("spotify-web-api-node");
 const mongoose = require("mongoose");
 const User = require("./model/user");
 const FavLyrics = require("./model/favLyrics");
-const Contacts = require("./model/contacts");
+// const Contacts = require("./model/contacts");
 // const morgan = require("morgan");
 
 const app = express();

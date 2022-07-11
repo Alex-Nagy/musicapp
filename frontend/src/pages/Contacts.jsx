@@ -38,7 +38,7 @@ const Contacts = ({ spotID }) => {
           style={{ border: "5px solid black", borderRadius: "10px" }}
         >
           <p className="float-right">{user.userID}</p>
-          {/*  <p>
+           <p>
             Artist name: <b>{user.artistName}</b>
           </p>
           <p>
@@ -72,7 +72,7 @@ const Contacts = ({ spotID }) => {
                 <i style={{ color: "red" }}>NO</i>
               )}
             </b>
-          </p> */}
+          </p>
           <br />
           <Button size="small" variant="outlined">
             Send email

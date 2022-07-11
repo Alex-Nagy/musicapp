@@ -6,7 +6,7 @@ const User = require("../model/user");
 const { startDb, stopDb, deleteAll } = require("./util/inMemoryDb");
 const { setupGoogleSuccessResponse, setupGoogleErrorResponse } = require("./util/httpMock");
 
-describe("POST requests to api/user/login", () => {
+describe("Test Login", () => {
   let connection;
   let server;
   let client;
@@ -30,7 +30,7 @@ describe("POST requests to api/user/login", () => {
     // given
 
     // when
-    const response = await client.post("/api/user/login").send({});
+    const response = await client.post("/login").send({});
 
     // then
     expect(response.status).toBe(400);
