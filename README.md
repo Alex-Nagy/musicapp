@@ -3,9 +3,10 @@
 A fullstack web application using Spotify's Web API. You can search for an artist or song and listen to music with the lyrics displayed.
 
 ## System requirements
-
-- node.js
-- npm
+<div>
+<img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original.svg" title="NodeJS" alt="NodeJS" width="40" height="40"/>&nbsp;
+<img src="https://github.com/devicons/devicon/blob/master/icons/npm/npm-original-wordmark.svg" title="npm" alt="npm" width="40" height="40"/>&nbsp;
+</div>
 
 ### :hammer_and_wrench: Languages and Tools :
 
