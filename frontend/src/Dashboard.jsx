@@ -10,6 +10,9 @@ import { Route, Routes } from "react-router-dom";
 import Profile from "./pages/Profile";
 import Lyrics from "./pages/Lyrics";
 import Users from "./pages/Users";
+import Contacts from "./pages/Contacts";
+import FavLyrics from "./pages/FavLyrics";
+import Login from "./components/Login";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "d4057ca6c39b408496e9a83ecabe4b4a",
@@ -21,6 +24,10 @@ export default function Dashboard({ code }) {
   const [searchResults, setSearchResults] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
   const [lyrics, setLyrics] = useState("");
+  const [spotID, setSpotID] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
 
   function chooseTrack(track) {
     setPlayingTrack(track);
@@ -46,6 +53,7 @@ export default function Dashboard({ code }) {
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
+    // getMe();
   }, [accessToken]);
 
   useEffect(() => {
@@ -78,9 +86,35 @@ export default function Dashboard({ code }) {
     return () => (cancel = true);
   }, [search, accessToken]);
 
+  useEffect(() => {
+    const getMe = async () => {
+      const meData = await axios.get("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "Content-Type": "application/json",
+        },
+      });
+      setSpotID(meData.data.id);
+      setName(meData.data.display_name);
+      setEmail(meData.data.email);
+      setCountry(meData.data.country);
+      console.log(meData.data);
+      console.log("getme");
+      // create in DB 🔻
+      await axios.post("http://localhost:8080/api/profile/create", {
+        userID: meData.data.id,
+        artistName: meData.data.display_name,
+        email: meData.data.email,
+        country: meData.data.country,
+      });
+      console.log("createme");
+    };
+    getMe();
+  }, [accessToken]);
+
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
-      <Navbar />
+      <Navbar email={email} />
       <Form.Control
         type="search"
         placeholder="Search Songs/Artists"
@@ -95,13 +129,41 @@ export default function Dashboard({ code }) {
             chooseTrack={chooseTrack}
           />
         ))}
+
         <Routes>
           <Route
-            path="/lyrics"
-            element={<Lyrics searchResults={searchResults} lyrics={lyrics} />}
+            path="/"
+            element={
+              <div>
+                <h3 className="text-center">Search for a song</h3>
+                <h4 className="text-center">Or collaborate with others</h4>
+              </div>
+            }
           />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/users" element={<Users />} />
+          <Route
+            path="/lyrics"
+            element={
+              <Lyrics
+                searchResults={searchResults}
+                lyrics={lyrics}
+                playingTrack={playingTrack}
+              />
+            }
+          />
+          <Route path="/favlyrics" element={<FavLyrics />} />
+          <Route path="/contacts" element={<Contacts spotID={spotID} />} />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                spotID={spotID}
+                myemail={email}
+                name={name}
+                mycountry={country}
+              />
+            }
+          />
+          <Route path="/users" element={<Users spotID={spotID} />} />
         </Routes>
       </div>
 

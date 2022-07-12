@@ -1,5 +1,5 @@
 require("dotenv").config();
-const app = require("../app");
+const app = require("../server");
 const mockServer = require("supertest");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const mongoose = require("mongoose");
@@ -13,7 +13,7 @@ test("/random endpoint sends 404", async () => {
   expect(response.status).toBe(404);
 });
 
-/* === /// === */
+/* ================================ */
 
 test("mongo-in-memory server is running", async () => {
   // given

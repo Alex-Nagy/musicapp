@@ -7,34 +7,54 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import Alert from "@mui/material/Alert";
 import axios from "axios";
 
-const Profile = () => {
-  const [artistName, setArtistName] = useState("");
-  const [country, setCountry] = useState("");
-  const [email, setEmail] = useState("");
+const Profile = ({ spotID, myemail, name, mycountry }) => {
+  const userID = spotID;
+  const [artistName, setArtistName] = useState(name);
+  const [country, setCountry] = useState(mycountry);
+  const [email, setEmail] = useState(myemail);
   const [languages, setLanguages] = useState([]);
   const [genres, setGenres] = useState([]);
   const [collab, setCollab] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [succes, setSucces] = useState(false);
+  // const [regDate, setRegDate] = useState(null)
 
-  const postProfile = async () => {
-    setLoading(true);
-    const resp = await axios
-      .post("http://localhost:8080/api/profile", {
-        artistName,
-        country,
-        email,
-        languages,
-        genres,
-        collab,
-      })
-      .then(() => setTimeout(() => {
+  const saveProfile = async () => {
+    try {
+      setLoading(true);
+      await axios
+        .post("http://localhost:8080/api/profile/update", {
+          userID,
+          artistName,
+          country,
+          email,
+          languages,
+          genres,
+          collab,
+        })
+        .then(() => {
+          //succes alert
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+        })
+        .then(() =>
+          setTimeout(() => {
+            setSucces(true);
+          }, 1000)
+        )
+        .then(() =>
+          setTimeout(() => {
+            setSucces(false);
+          }, 3000)
+        );
+    } catch (error) {
+      alert(error.message);
       setLoading(false);
-    }, 1500));
-
-    console.log(resp);
-
+    }
   };
 
   return (
@@ -49,31 +69,47 @@ const Profile = () => {
       <h1>My Profile</h1>
       <Avatar />
       <TextField
+        id="outlined-read-only-input"
+        label="User ID"
+        value={spotID}
+        InputProps={{
+          readOnly: true,
+        }}
+        size="small"
+        disabled
+      />
+      <TextField
         size="small"
         label="My Artist Name"
-        color="secondary"
+        defaultValue={name}
         onChange={(e) => setArtistName(e.target.value)}
-        value={artistName}
+        className="bg-light"
       />
       <TextField
         size="small"
         label="Country"
+        defaultValue={mycountry}
         onChange={(e) => setCountry(e.target.value)}
+        className="bg-light"
       />
       <TextField
         size="small"
         label="Email"
+        defaultValue={myemail}
         onChange={(e) => setEmail(e.target.value)}
+        className="bg-light"
       />
       <TextField
         size="small"
         label="Languages"
-        onChange={(e) => setLanguages(e.target.value)}
+        onChange={(e) => setLanguages(e.target.value.split(", "))}
+        className="bg-light"
       />
       <TextField
         size="small"
         label="Genres"
-        onChange={(e) => setGenres(e.target.value)}
+        onChange={(e) => setGenres(e.target.value.split(", "))}
+        className="bg-light"
       />
       <FormControlLabel
         control={
@@ -85,7 +121,7 @@ const Profile = () => {
       <LoadingButton
         size="small"
         color="success"
-        onClick={postProfile}
+        onClick={saveProfile}
         loading={loading}
         loadingPosition="start"
         startIcon={<SaveIcon />}
@@ -93,9 +129,20 @@ const Profile = () => {
       >
         Save
       </LoadingButton>
-      <Button size="small" variant="outlined" color="error">
+      <Button
+        size="small"
+        variant="outlined"
+        color="error"
+        onClick={() => setLoading(false)}
+      >
         Cancel
       </Button>
+      <br />
+      {succes && (
+        <Alert variant="filled" severity="success">
+          Profile Saved!
+        </Alert>
+      )}
     </Box>
   );
 };

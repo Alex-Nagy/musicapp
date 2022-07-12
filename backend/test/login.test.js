@@ -1,12 +1,12 @@
 require("dotenv").config();
-const app = require("../app");
+const app = require("../server");
 const jwt = require("jsonwebtoken");
 const mockServer = require("supertest");
 const User = require("../model/user");
 const { startDb, stopDb, deleteAll } = require("./util/inMemoryDb");
-const { setupGoogleSuccessResponse, setupGoogleErrorResponse } = require("./util/httpMock");
+// const { setupGoogleSuccessResponse, setupGoogleErrorResponse } = require("./util/httpMock");
 
-describe("POST requests to api/user/login", () => {
+describe("Test Login", () => {
   let connection;
   let server;
   let client;
@@ -30,7 +30,7 @@ describe("POST requests to api/user/login", () => {
     // given
 
     // when
-    const response = await client.post("/api/user/login").send({});
+    const response = await client.post("/login").send({});
 
     // then
     expect(response.status).toBe(400);
@@ -41,7 +41,7 @@ describe("POST requests to api/user/login", () => {
     const code = "random";
 
     // when
-    const response = await client.post("/api/user/login").send({ code });
+    const response = await client.post("/login").send({ code });
 
     // then
     expect(response.status).toBe(400);
@@ -49,10 +49,10 @@ describe("POST requests to api/user/login", () => {
 
   test("should return 400 without code", async () => {
     // given
-    const provider = "github";
+    const provider = "spotify";
 
     // when
-    const response = await client.post("/api/user/login").send({ provider });
+    const response = await client.post("/login").send({ provider });
 
     // then
     expect(response.status).toBe(400);
@@ -64,7 +64,7 @@ describe("POST requests to api/user/login", () => {
     const provider = "gitlab";
 
     // when
-    const response = await client.post("/api/user/login").send({
+    const response = await client.post("/login").send({
       code,
       provider,
     });
@@ -73,59 +73,20 @@ describe("POST requests to api/user/login", () => {
     expect(response.status).toBe(400);
   });
 
-  test("should return 200 with valid provider id (user not created)", async () => {
+  test("should return 200 with valid data", async () => {
     // given
-    const code = "4/0AX4XfWigRi0tflCcAhGM5WngKa5_199L1dJjayorTpuSj0z4AlQbnIyZSs78wBXHO3HG_g";
-    const provider = "google";
-    setupGoogleSuccessResponse("7458tygbhf78");
+    const code = "AQC-jhdC_Z4VYjhhsaTMdxJ6BZzXjyAWiXOfh-C_RD7epYXgjtZ-CSLWqCD5zaA3IwWjpYBGmN4ZVXoh_uOCtZlaReZQQ6RthuN7u_qezhAzfUJCAHbiuAuUJF";
 
     // when
-    const response = await client.post("/api/user/login").send({
+    const response = await client.post("/login").send({
       code,
-      provider,
+      redirectUri: process.env.REDIRECT_URI,
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
     });
 
     // then
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(400);
   });
 
-  test("should return 200 with jwt valid provider id (user not created)", async () => {
-    // given
-    const code = "4/0AX4XfWigRi0tflCcAhGM5WngKa5_199L1dJjayorTpuSj0z4AlQbnIyZSs78wBXHO3HG_g";
-    const provider = "google";
-    const googleUserId = "vshdg674t7ryfgb";
-    setupGoogleSuccessResponse(googleUserId);
-
-    // when
-    const response = await client.post("/api/user/login").send({
-      code,
-      provider,
-    });
-
-    // then
-    expect(response.status).toBe(200);
-    const responseToken = jwt.decode(response.body);
-    expect(responseToken.providers.google).toBe(googleUserId);
-    const users = await User.find();
-    expect(users).toStrictEqual([]);
-  });
-
-  test("should return 401 with invalid code (user not created)", async () => {
-    // given
-    const code = "4/0AX4XfWigRi0tflCcAhGM5WngKa5_199L1dJjayorTpuSj0z4AlQbnIyZSs78wBXHO3HG_g";
-    const provider = "google";
-    setupGoogleErrorResponse();
-
-    // when
-    const response = await client.post("/api/user/login").send({
-      code,
-      provider,
-    });
-
-    // then
-    expect(response.status).toBe(401);
-    expect(response.body).toStrictEqual({});
-    const users = await User.find();
-    expect(users).toStrictEqual([]);
-  });
 });

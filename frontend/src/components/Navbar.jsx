@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 // import { useAuth } from "../providers/auth";
 
-const Navbar = () => {
+const Navbar = ({ email }) => {
   const navigate = useNavigate();
   // const { auth, token, logout } = useAuth();
 
@@ -11,6 +11,11 @@ const Navbar = () => {
     console.log("rerouting");
     navigate(path);
   };
+
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = '/';
+}
 
   return (
     <nav
@@ -22,25 +27,49 @@ const Navbar = () => {
       }}
     >
       <div>
+        <Button onClick={() => nav("/lyrics")} variant="contained" size="small">
+          🎤Lyrics
+        </Button>
         <Button
-          onClick={() => nav("/lyrics")}
+          className="mr-5"
+          onClick={() => nav("/users")}
           variant="contained"
           size="small"
         >
-          Lyrics
+          🎼Collaborate
         </Button>
-        <Button onClick={() => nav("/about")} variant="contained" size="small">
-          About
+        <Button
+          className="ml-5"
+          onClick={() => nav("/contacts")}
+          variant="contained"
+          size="small"
+        >
+          📑Contacts
         </Button>
-        <Button onClick={() => nav("/users")} variant="contained" size="small">
-          Users
+        <Button
+          onClick={() => nav("/favlyrics")}
+          variant="contained"
+          size="small"
+        >
+          ⭐Lyrics
         </Button>
         <Button
           onClick={() => nav("/profile")}
           variant="contained"
           size="small"
         >
-          Profile
+          👤Profile
+        </Button>
+        <span>
+          {email}
+        </span>
+        <Button
+          onClick={() => logout()}
+          variant="contained"
+          size="small"
+          color="error"
+        >
+          Log out
         </Button>
       </div>
     </nav>

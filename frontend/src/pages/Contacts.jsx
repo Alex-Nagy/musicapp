@@ -1,57 +1,45 @@
 import { Button } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-const Users = ({ spotID }) => {
+const Contacts = ({ spotID }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const getUsers = async () => {
-      const usersData = await axios.get("http://localhost:8080/api/users");
-      setUsers(usersData.data.users);
-      console.log(usersData);
+      console.log("lets get my contacts " + spotID);
+      const usersData = await axios.get("http://localhost:8080/api/contacts", {
+        params: { userID: spotID },
+      });
+      console.log(usersData.data);
+      setUsers(usersData.data);
     };
     getUsers();
   }, []);
 
-  const saveContact = async (
-    userID,
-    artistName,
-    country,
-    email,
-    languages,
-    genres,
-    collab,
-    instruments
-  ) => {
-    await axios.post("http://localhost:8080/api/contacts", {
+  const deleteContact = async (contactID) => {
+    await axios.post("http://localhost:8080/api/contacts/delete", {
       myID: spotID,
-      userID,
-      artistName,
-      country,
-      email,
-      languages,
-      genres,
-      collab,
-      instruments,
+      userID: contactID,
     });
+  };
+
+  const deleteItem = (index) => {
+    setUsers((user) => user.filter((item, i) => i !== index));
   };
 
   return (
     <div>
-      <h1 className="m-0">Users</h1>
-      <button className="btn btn-link m-0 p-0 float-right">
-        only collaborative
-      </button>
-      <br />
+      <h1>My Contacts</h1>
       {users.map((user, i) => (
         <div
           key={i}
           style={{ border: "5px solid black", borderRadius: "10px", backgroundColor: "#fffd" }}
         >
-          <p>
-            Artist name: <b>{user.artistName}</b>{" "}
-            <span className="float-right">{user.userID}</span>
+          <p className="float-right">{user.userID}</p>
+           <p>
+            Artist name: <b>{user.artistName}</b>
           </p>
           <p>
             Country: <b>{user.country}</b>
@@ -85,26 +73,21 @@ const Users = ({ spotID }) => {
               )}
             </b>
           </p>
+          <br />
           <Button size="small" variant="outlined">
             Send email
           </Button>
           <Button
-            size="small"
             variant="outlined"
-            onClick={() =>
-              saveContact(
-                user.userID,
-                user.artistName,
-                user.country,
-                user.email,
-                user.languages,
-                user.genres,
-                user.collab,
-                user.instruments
-              )
-            }
+            color="error"
+            className="float-right"
+            startIcon={<DeleteIcon />}
+            onClick={() => {
+              deleteContact(user.userID);
+              deleteItem(i);
+            }}
           >
-            Save
+            Delete
           </Button>
         </div>
       ))}
@@ -112,4 +95,4 @@ const Users = ({ spotID }) => {
   );
 };
 
-export default Users;
+export default Contacts;
