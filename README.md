@@ -28,10 +28,10 @@ A fullstack web application using Spotify's Web API. You can search for an artis
 Create a **_.env_** file in **backend** folder, with the following variables:
 
     PORT={8080}
-    CONNECTION_STRING={mongodb://localhost:27017/musicapp} (Database)
+    CONNECTION_STRING={mongodb://localhost:27017/musicapp}
     REDIRECT_URI={http://localhost:3000/callback/spotify}
     CLIENT_ID={d4057ca6c39b408496e9a83ecabe4b4a}
-    CLIENT_SECRET={---------------------------}
+    CLIENT_SECRET={-------client-secret--------}
 
 ##### Start backend
 
