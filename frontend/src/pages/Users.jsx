@@ -79,9 +79,9 @@ const Users = ({ spotID }) => {
             Open now to Collaborate:{" "}
             <b>
               {user.collab ? (
-                <i style={{ color: "green" }}>YES</i>
+                <i style={{ color: "green" }}>YES✔</i>
               ) : (
-                <i style={{ color: "red" }}>NO</i>
+                <i style={{ color: "red" }}>NO❌</i>
               )}
             </b>
           </p>

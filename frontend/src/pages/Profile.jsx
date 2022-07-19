@@ -9,6 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
+import './Profile.scss'
 
 const Profile = ({ spotID, myemail, name, mycountry }) => {
   const userID = spotID;
@@ -59,6 +60,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
 
   return (
     <Box
+      className="box"
       component="form"
       sx={{
         "& .MuiTextField-root": { m: 1, width: "25ch" },
@@ -83,33 +85,33 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
         label="My Artist Name"
         defaultValue={name}
         onChange={(e) => setArtistName(e.target.value)}
-        className="bg-light"
+        className="inputField"
       />
       <TextField
         size="small"
         label="Country"
         defaultValue={mycountry}
         onChange={(e) => setCountry(e.target.value)}
-        className="bg-light"
+        className="inputField"
       />
       <TextField
         size="small"
         label="Email"
         defaultValue={myemail}
         onChange={(e) => setEmail(e.target.value)}
-        className="bg-light"
+        className="inputField"
       />
       <TextField
         size="small"
         label="Languages"
         onChange={(e) => setLanguages(e.target.value.split(", "))}
-        className="bg-light"
+        className="inputField"
       />
       <TextField
         size="small"
         label="Genres"
         onChange={(e) => setGenres(e.target.value.split(", "))}
-        className="bg-light"
+        className="inputField"
       />
       <FormControlLabel
         control={

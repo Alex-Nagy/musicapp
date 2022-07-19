@@ -13,6 +13,7 @@ import Users from "./pages/Users";
 import Contacts from "./pages/Contacts";
 import FavLyrics from "./pages/FavLyrics";
 import Login from "./components/Login";
+import "./Dashboard.scss";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "d4057ca6c39b408496e9a83ecabe4b4a",
@@ -113,63 +114,73 @@ export default function Dashboard({ code }) {
   }, [accessToken]);
 
   return (
-    <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
-      <Navbar email={email} />
-      <Form.Control
-        type="search"
-        placeholder="Search Songs/Artists"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
-        {searchResults.map((track) => (
-          <TrackSearchResult
-            track={track}
-            key={track.uri}
-            chooseTrack={chooseTrack}
-          />
-        ))}
+    <div className="base">
+      <Container
+        className="d-flex flex-column py-2"
+        style={{ height: "100vh" }}
+      >
+        {/* css  */}
+        <div id="man" />
+        <div id="stars" />
+        <div id="stars2" />
+        <div id="stars3" />
+        <Navbar email={email} />
+        <Form.Control
+          type="search"
+          placeholder="Search Songs/Artists"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
+          {searchResults.map((track) => (
+            <TrackSearchResult
+              track={track}
+              key={track.uri}
+              chooseTrack={chooseTrack}
+            />
+          ))}
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div>
-                <h3 className="text-center">Search for a song</h3>
-                <h4 className="text-center">Or collaborate with others</h4>
-              </div>
-            }
-          />
-          <Route
-            path="/lyrics"
-            element={
-              <Lyrics
-                searchResults={searchResults}
-                lyrics={lyrics}
-                playingTrack={playingTrack}
-              />
-            }
-          />
-          <Route path="/favlyrics" element={<FavLyrics />} />
-          <Route path="/contacts" element={<Contacts spotID={spotID} />} />
-          <Route
-            path="/profile"
-            element={
-              <Profile
-                spotID={spotID}
-                myemail={email}
-                name={name}
-                mycountry={country}
-              />
-            }
-          />
-          <Route path="/users" element={<Users spotID={spotID} />} />
-        </Routes>
-      </div>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div>
+                  <h3 className="text-center">Search for a song</h3>
+                  <h4 className="text-center">Or collaborate with others</h4>
+                </div>
+              }
+            />
+            <Route
+              path="/lyrics"
+              element={
+                <Lyrics
+                  searchResults={searchResults}
+                  lyrics={lyrics}
+                  playingTrack={playingTrack}
+                />
+              }
+            />
+            <Route path="/favlyrics" element={<FavLyrics />} />
+            <Route path="/contacts" element={<Contacts spotID={spotID} />} />
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  spotID={spotID}
+                  myemail={email}
+                  name={name}
+                  mycountry={country}
+                />
+              }
+            />
+            <Route path="/users" element={<Users spotID={spotID} />} />
+          </Routes>
+        </div>
 
-      <div>
-        <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
-      </div>
-    </Container>
+        <div>
+          <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
+        </div>
+      </Container>
+    </div>
   );
 }
