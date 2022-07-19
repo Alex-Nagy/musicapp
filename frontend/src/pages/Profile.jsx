@@ -70,6 +70,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
     >
       <h1>My Profile</h1>
       <Avatar />
+      <div className="fields">
       <TextField
         id="outlined-read-only-input"
         label="User ID"
@@ -113,6 +114,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
         onChange={(e) => setGenres(e.target.value.split(", "))}
         className="inputField"
       />
+      </div>
       <FormControlLabel
         control={
           <Checkbox color="success" onChange={() => setCollab(!collab)} />
@@ -120,6 +122,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
         label="Open to collaborate"
       />
       <br />
+      <div className="save-and-cancel">
       <LoadingButton
         size="small"
         color="success"
@@ -128,6 +131,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
         loadingPosition="start"
         startIcon={<SaveIcon />}
         variant="contained"
+        className="btn save"
       >
         Save
       </LoadingButton>
@@ -136,9 +140,11 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
         variant="outlined"
         color="error"
         onClick={() => setLoading(false)}
+        className="btn cancel"
       >
         Cancel
       </Button>
+      </div>
       <br />
       {succes && (
         <Alert variant="filled" severity="success">
