@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 // import { useAuth } from "../providers/auth";
+import './Navbar.scss'
 
 const Navbar = ({ email }) => {
   const navigate = useNavigate();
@@ -20,18 +21,13 @@ const Navbar = ({ email }) => {
   return (
     <nav
       className="navbar"
-      style={{
-        backgroundColor: "gray",
-        display: "flex",
-        justifyContent: "space-between",
-      }}
     >
-      <div>
+      
         <Button onClick={() => nav("/lyrics")} variant="contained" size="small">
           🎤Lyrics
         </Button>
         <Button
-          className="mr-5"
+          className="nav-collab"
           onClick={() => nav("/users")}
           variant="contained"
           size="small"
@@ -39,7 +35,7 @@ const Navbar = ({ email }) => {
           🎼Collaborate
         </Button>
         <Button
-          className="ml-5"
+          className="nav-cont"
           onClick={() => nav("/contacts")}
           variant="contained"
           size="small"
@@ -71,7 +67,7 @@ const Navbar = ({ email }) => {
         >
           Log out
         </Button>
-      </div>
+      
     </nav>
   );
 };
