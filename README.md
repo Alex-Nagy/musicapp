@@ -1,6 +1,7 @@
 # musicApp
 
 A fullstack web application using Spotify's Web API. You can search for an artist or song and listen to music with the lyrics displayed.
+You can search for musician users and collaborate with them, save their contacts, send them an email. Also can save lyrics.
 
 ## System requirements
 
