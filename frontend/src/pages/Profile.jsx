@@ -9,6 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
+import './Profile.scss'
 
 const Profile = ({ spotID, myemail, name, mycountry }) => {
   const userID = spotID;
@@ -59,6 +60,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
 
   return (
     <Box
+      className="box"
       component="form"
       sx={{
         "& .MuiTextField-root": { m: 1, width: "25ch" },
@@ -68,6 +70,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
     >
       <h1>My Profile</h1>
       <Avatar />
+      <div className="fields">
       <TextField
         id="outlined-read-only-input"
         label="User ID"
@@ -83,34 +86,35 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
         label="My Artist Name"
         defaultValue={name}
         onChange={(e) => setArtistName(e.target.value)}
-        className="bg-light"
+        className="inputField"
       />
       <TextField
         size="small"
         label="Country"
         defaultValue={mycountry}
         onChange={(e) => setCountry(e.target.value)}
-        className="bg-light"
+        className="inputField"
       />
       <TextField
         size="small"
         label="Email"
         defaultValue={myemail}
         onChange={(e) => setEmail(e.target.value)}
-        className="bg-light"
+        className="inputField"
       />
       <TextField
         size="small"
         label="Languages"
         onChange={(e) => setLanguages(e.target.value.split(", "))}
-        className="bg-light"
+        className="inputField"
       />
       <TextField
         size="small"
         label="Genres"
         onChange={(e) => setGenres(e.target.value.split(", "))}
-        className="bg-light"
+        className="inputField"
       />
+      </div>
       <FormControlLabel
         control={
           <Checkbox color="success" onChange={() => setCollab(!collab)} />
@@ -118,6 +122,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
         label="Open to collaborate"
       />
       <br />
+      <div className="save-and-cancel">
       <LoadingButton
         size="small"
         color="success"
@@ -126,6 +131,7 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
         loadingPosition="start"
         startIcon={<SaveIcon />}
         variant="contained"
+        className="btn save"
       >
         Save
       </LoadingButton>
@@ -134,9 +140,11 @@ const Profile = ({ spotID, myemail, name, mycountry }) => {
         variant="outlined"
         color="error"
         onClick={() => setLoading(false)}
+        className="btn cancel"
       >
         Cancel
       </Button>
+      </div>
       <br />
       {succes && (
         <Alert variant="filled" severity="success">
